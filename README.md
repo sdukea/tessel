@@ -1,19 +1,31 @@
+<div align="center">
+
+<img src="assets/logo.svg" width="96" alt="Tessel logo">
+
 # Tessel
 
-**A multi-tenant telemetry backend for agricultural edge sensors.**
+**Multi-tenant telemetry backend for agricultural edge sensors**
 
-Devices on unreliable rural networks push batched soil readings. Tessel stores each reading exactly once, keeps every organization's data isolated, raises alerts, and notifies other systems through signed webhooks.
+Exactly-once ingestion&ensp;·&ensp;Tenant isolation&ensp;·&ensp;Signed webhooks
 
-![Status](https://img.shields.io/badge/status-in%20development-F59E0B?style=flat-square)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat-square&logo=postgresql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
+<p>
+  <img alt="Status" src="https://img.shields.io/badge/status-in%20development-F59E0B?style=flat-square">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat-square&logo=postgresql&logoColor=white">
+  <img alt="Redis" src="https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white">
+</p>
+
+[Architecture](#architecture)&ensp;·&ensp;[Core flows](#core-flows)&ensp;·&ensp;[API](#api-overview)&ensp;·&ensp;[Design decisions](#design-decisions)&ensp;·&ensp;[Quickstart](#quickstart)
+
+</div>
 
 ---
 
 ## Why Tessel
+
+Devices on unreliable rural networks push batched soil readings. Tessel stores each reading exactly once, keeps every organization's data isolated, raises alerts, and notifies other systems through signed webhooks.
 
 A soil probe on a weak 2G link often loses the response to its request, so it retries and the server sees the same batch twice. A worker can crash between saving an alert and sending it. One organization must never see another's fields. Each feature in Tessel exists to prevent a specific failure:
 
