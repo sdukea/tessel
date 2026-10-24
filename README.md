@@ -1,21 +1,15 @@
-<div align="center">
-
 # Tessel
 
 **A multi-tenant telemetry backend for agricultural edge sensors.**
 
 Devices on unreliable rural networks push batched soil readings. Tessel stores each reading exactly once, keeps every organization's data isolated, raises alerts, and notifies other systems through signed webhooks.
 
-[![CI](https://github.com/sdukea/tessel/actions/workflows/ci.yml/badge.svg)](https://github.com/sdukea/tessel/actions/workflows/ci.yml)
-![Python](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-async-009688?logo=fastapi&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
-
-</div>
-
-> [!NOTE]
-> Tessel is under active development. Performance numbers are added from real load tests as milestones ship.
+![Status](https://img.shields.io/badge/status-in%20development-F59E0B?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
 
 ---
 
