@@ -112,6 +112,56 @@ On `SIGTERM` the worker stops claiming, finishes the job in hand and exits. If i
 
 ---
 
+## Data model
+
+Every row that holds tenant data carries `org_id`, and the guarantees above are enforced by the schema itself, not only by the API.
+
+```mermaid
+erDiagram
+    ORGS ||--o{ MEMBERSHIPS : "has"
+    USERS ||--o{ MEMBERSHIPS : "joins with a role"
+    ORGS ||--o{ DEVICES : "owns"
+    DEVICES ||--o{ READINGS : "uploads"
+    DEVICES ||--o{ IDEMPOTENCY_KEYS : "claims"
+    DEVICES ||--o{ ALERTS : "raises"
+    ALERTS ||--o{ JOBS : "delivered by"
+
+    DEVICES {
+        text id PK
+        text org_id FK
+        text key_prefix UK
+        text key_hash "SHA-256, never the key"
+    }
+    READINGS {
+        bigint id PK
+        text device_id FK
+        text metric
+        float value "CHECK physical range"
+        timestamptz recorded_at "UNIQUE with device_id, metric"
+    }
+    IDEMPOTENCY_KEYS {
+        text device_id PK
+        uuid key PK
+        text request_sha256
+        jsonb response
+    }
+    JOBS {
+        bigint id PK
+        text status "pending, running, done, dead"
+        int attempts
+        timestamptz locked_until "lease"
+    }
+```
+
+---|---|
+| `UNIQUE (device_id, metric, recorded_at)` | A reading can't be stored twice, even under two different idempotency keys |
+| `PRIMARY KEY (device_id, key)` on idempotency keys | Concurrent retries serialize on one row |
+| `(device_id, recorded_at DESC, id DESC)` index | Keyset pages come out of the index already sorted, with no sort step |
+| Partial index on `jobs (run_at) WHERE status = 'pending'` | Workers find due jobs without scanning finished ones |
+| Monthly range partitions on `recorded_at` (UTC bounds) | Indexes stay small; retention is `DROP TABLE`, not a bloating `DELETE` |
+
+---
+
 ## Results
 
 | Measurement | Result |
