@@ -76,8 +76,8 @@ Forecasts are needed once a day per field, so they're computed in a nightly batc
 
 | | |
 |---|---|
-| Source | [Open-Meteo historical weather API](https://open-meteo.com/en/docs/historical-weather-api) (ERA5-Land reanalysis) and its [historical forecast API](https://open-meteo.com/en/docs/historical-forecast-api) |
-| Coverage | 50 sites across arid, temperate, monsoon and continental climates, 2016–2024, hourly |
+| Source | [Open-Meteo historical weather API](https://open-meteo.com/en/docs/historical-weather-api) (ERA5-Land reanalysis) and its [previous-runs API](https://open-meteo.com/en/docs/previous-runs-api) (day-ahead forecasts as issued, January 2024 onward) |
+| Coverage | 50 sites across arid, temperate, monsoon and continental climates, 2016 onward, hourly |
 | Size | ≈ 3.9 million rows |
 | Variables | Soil moisture at 0–7 cm and 7–28 cm, precipitation, temperature, humidity, reference evapotranspiration |
 | Fault labels | Stuck, spike, drift and dropout faults injected into the real series at known positions |
@@ -134,7 +134,7 @@ Each decision is recorded as an ADR in [`docs/adr/`](docs/adr/).
 |---|---|
 | **Gradient boosting as champion** until a deep model beats it under the same protocol | Trees can't extrapolate beyond the range seen in training |
 | **Quantile forecasts** instead of a single value | Three outputs to calibrate and monitor |
-| **Archived forecasts as inputs** instead of observed weather | Archived forecasts only go back to about 2021 |
+| **Archived forecasts as inputs** instead of observed weather | Day-ahead archived forecasts start in January 2024, so the forecast-aware model trains on fewer years |
 | **Feature store with point-in-time joins** | More infrastructure than a feature function in a notebook |
 | **Cost-tuned fault threshold** | Error costs are estimates and need revisiting with real operators |
 | **Batch forecasts, online fault scoring** | Two serving paths to operate |
