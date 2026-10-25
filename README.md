@@ -17,7 +17,7 @@ Exactly-once ingestion&ensp;·&ensp;Tenant isolation&ensp;·&ensp;Signed webhook
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white">
 </p>
 
-[Why](#why-tessel)&ensp;·&ensp;[Architecture](#architecture)&ensp;·&ensp;[Core flows](#core-flows)&ensp;·&ensp;[Results](#results)&ensp;·&ensp;[API](#api-overview)&ensp;·&ensp;[Decisions](#design-decisions)&ensp;·&ensp;[Quickstart](#quickstart)
+[Why](#why-tessel)&ensp;·&ensp;[Architecture](#architecture)&ensp;·&ensp;[Core flows](#core-flows)&ensp;·&ensp;[Data model](#data-model)&ensp;·&ensp;[Results](#results)&ensp;·&ensp;[API](#api-overview)&ensp;·&ensp;[Decisions](#design-decisions)&ensp;·&ensp;[Quickstart](#quickstart)
 
 </div>
 
