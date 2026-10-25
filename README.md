@@ -153,7 +153,8 @@ erDiagram
     }
 ```
 
----|---|
+| Constraint or index | What it guarantees |
+|---|---|
 | `UNIQUE (device_id, metric, recorded_at)` | A reading can't be stored twice, even under two different idempotency keys |
 | `PRIMARY KEY (device_id, key)` on idempotency keys | Concurrent retries serialize on one row |
 | `(device_id, recorded_at DESC, id DESC)` index | Keyset pages come out of the index already sorted, with no sort step |
