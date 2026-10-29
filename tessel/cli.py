@@ -49,3 +49,13 @@ def build_parser() -> argparse.ArgumentParser:
     load.set_defaults(handler='tessel.load')
 
     return p
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    print(f"would run {args.handler} with {vars(args)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
