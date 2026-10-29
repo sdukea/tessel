@@ -20,3 +20,5 @@ def build_parser() -> argparse.ArgumentParser:
                                 description='Multi-tenant telemetry backend for soil sensors')
     sub = p.add_subparsers(dest='command', required=True)
     serve = sub.add_parser('serve', help='run the HTTP API')
+    serve.add_argument("--host", default='127.0.0.1')
+    serve.add_argument('--port', type=int, default=8000)
