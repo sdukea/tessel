@@ -42,6 +42,10 @@ def build_parser() -> argparse.ArgumentParser:
     migrate = sub.add_parser('migrate', help='apply SQL migrations')
     migrate.set_defaults(handler='tessel.admin')
 
-    
+    # load
+    load = sub.add_parser('loadtest', help='measure throughput and p99 latency')
+    load.add_argument('--requests', type=int, default=10_000)
+    load.add_argument('--concurrency', type=int, default=50)
+    load.set_defaults(handler='tessel.load')
 
     return p
