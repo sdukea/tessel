@@ -38,6 +38,10 @@ def build_parser() -> argparse.ArgumentParser:
     sim.add_argument('--lose-responses', type=float, default=0.05)
     sim.set_defaults(handler='tessel.simulate')
 
+    # migrate
+    migrate = sub.add_parser('migrate', help='apply SQL migrations')
+    migrate.set_defaults(handler='tessel.admin')
+
     
 
     return p
