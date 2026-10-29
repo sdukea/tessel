@@ -19,8 +19,19 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog='tessel',
                                 description='Multi-tenant telemetry backend for soil sensors')
     sub = p.add_subparsers(dest='command', required=True)
+
+    # serve
     serve = sub.add_parser('serve', help='run the HTTP API')
     serve.add_argument("--host", default='127.0.0.1')
     serve.add_argument('--port', type=int, default=8000)
     serve.set_defaults(handler="tessel.api")
+
+    # worker
+    worker = sub.add_parser('worker', help='claim jobs: alert rules, webhook deliveries, exports')
+    worker.add_argument('--concurrency', type=int, default=4)
+    worker.set_defaults(handler='tessel.worker')
+
+    
+
+
     return p
