@@ -31,7 +31,13 @@ def build_parser() -> argparse.ArgumentParser:
     worker.add_argument('--concurrency', type=int, default=4)
     worker.set_defaults(handler='tessel.worker')
 
-    
+    # simulate (sim)
+    sim = sub.add_parser('simulate', help='replay real Open-Meteo history as a fleet of probes')
+    sim.add_argument('sites_csv')
+    sim.add_argument('--devices-per-site', type=int, default=5)
+    sim.add_argument('--lose-responses', type=float, default=0.05)
+    sim.set_defaults(handler='tessel.simulate')
 
+    
 
     return p
