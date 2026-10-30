@@ -18,7 +18,16 @@ import sys
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog='tessel',
                                 description='Multi-tenant telemetry backend for soil sensors')
+    """
+    - p -> the object that will read the command line
+    """
     sub = p.add_subparsers(dest='command', required=True)
+
+    """
+    - sub -> the factory used to create one parser per subcommand
+    - dest='command' -> stores the chosen subcommand's name in 'args.command'
+    - required=True -> running just 'tessel' will be an error
+    """
 
     # serve
     serve = sub.add_parser('serve', help='run the HTTP API')
