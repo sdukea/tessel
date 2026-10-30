@@ -1,38 +1,96 @@
 # Tessel roadmap
 
-One row per video in Sriniously's *Backend from first principles* playlist (31 videos), the
-Tessel feature it drives, and the day it's built. Source: the Tessel Backend Build study page.
+Where each video in the playlist lands in Tessel.
 
-| Day | Video | Tessel feature it drives |
-|---|---|---|
-| 1 | 1. Roadmap for backend from first principles | **Map the system:** a CLI with one sub-command per process (`serve`, `worker`, `simulate`, `migrate`, `loadtest`) |
-| 2 | 2. Walk the path of a true backend engineer | **The domain core:** pure alert rules (dry, spike, stuck, silent) tested on real weather data |
-| 3 | 3. What is a Backend, how do they work and why do we need them? | **A server from a socket:** HTTP/1.1 framed by hand over TCP, with a readings endpoint |
-| 4 | 4. Benefits of learning backend engineering from first principles | **A fleet of fake probes:** real ERA5-Land history replayed over a link that loses responses |
-| 5 | 5. Understanding HTTP for backend engineers | **HTTP semantics, by hand:** 405 with `Allow`, CORS preflight, content negotiation, ETag/304 |
-| 6 | 6. What is Routing in Backend? | **Routing and errors:** versioned FastAPI router, typed path parameters, problem+json errors |
-| 7 | 7. Serialization and Deserialization for backend engineers | **Response models:** units on every value, UTC timestamps, rounded floats |
-| 8 | 8. Authentication and authorization for backend engineers | **Auth for people and probes:** Argon2id, JWTs, rotating refresh tokens, hashed device keys, org roles |
-| 9 | 9. Validations and transformations for backend engineers | **Validate at the edge:** ingest batches checked, converted and normalised before storage |
-| 10 | 10. Controllers, services, repositories, middlewares and request context | **Layers and idempotency:** handler → service → repository, request IDs, idempotency keys |
-| 11 | 11. Complete REST API Design | **REST resources and pagination:** nested org/device resources with keyset cursors |
-| 12 | 12. Mastering Databases with Postgres | **Postgres, exactly once:** schema, constraints, migrations, idempotent ingestion |
-| 13 | 13. Caching, the secret behind it all | **Cache the hottest query:** cache-aside, generational invalidation, stampede lock |
-| 14 | 14. Task queues and background jobs | **Alerts through an outbox:** Postgres job queue with `SKIP LOCKED`, leases and backoff |
-| 15 | 15. Full text search using Elasticsearch | **Search field notes:** Postgres full-text search with a GIN index, ranking and snippets |
-| 16 | 16. Error Handling and Building Fault Tolerant Systems | **Survive the weather API:** retries with jitter, circuit breaker, stale fallback |
-| 17 | 17. Production-grade Configuration Management | **Config that fails fast:** typed settings that refuse to start when wrong |
-| 18 | 18. Logging, Monitoring and Observability | **See what it's doing:** JSON logs with redaction, latency histogram, `/metrics` |
-| 19 | 19. Graceful Shutdown | **Stop without losing work:** a worker that finishes its current job on SIGTERM |
-| 20 | 20. Backend Security: Everything You Need to Know | **Security controls:** token-bucket rate limiting, security headers, login throttling |
-| 21 | 21.1 Backend Scaling and Performance Engineering: Part 1 | **Estimate, then measure:** capacity maths, percentiles, the N+1 fix |
-| 22 | 21.2 Backend Scaling and Performance Engineering: Part 2 | **Load test and partitions:** async load test with zero duplicates, monthly partitions |
-| 23 | 22. Concurrency & Parallelism: IO Bound vs CPU Bound | **I/O-bound vs CPU-bound:** bounded async fetches, CPU work in a process pool |
-| 24 | 23. Object Storage: Part 1 | **Exports via presigned URLs:** safe keys, SigV4 signing, two-phase records |
-| 25 | 24. Object Storage: Part 2 | **Multipart and ranges:** part sizing within S3's limits, resumable downloads |
-| 26 | 25. Real-Time Backends | **Live alerts over SSE:** per-org channels, Last-Event-ID replay, heartbeats |
-| 27 | 26. Testing for Backend Engineers | **Failure tests:** fake clock, factories, app harness, property tests |
-| 28 | 27. The Twelve-Factor App | **Admin processes:** admin CLI, Procfile, a real worker process |
-| 29 | 28. OpenAPI: The universal contract | **The contract in CI:** committed `openapi.json` and a breaking-change check |
-| 30 | 29. Webhooks: how the server calls you | **Signed webhooks:** Standard Webhooks signatures, SSRF guard, retry schedule |
-| 31 | 30. DevOps for backend engineers | **Ship it:** Dockerfile, Compose stack, CI with real Postgres and an image scan |
+Day 1, Video 1: Roadmap
+A command-line tool with one command per process (serve, worker, simulate, migrate, loadtest), so the whole system is mapped before any of it exists.
+
+Day 2, Video 2: Path of a backend engineer
+The alert rules (dry, spike, stuck, silent) as plain functions, checked against real weather data so they don't raise false alarms.
+
+Day 3, Video 3: What is a backend
+A web server built directly on a socket, reading and writing HTTP by hand, to see what frameworks do for you.
+
+Day 4, Video 4: Why first principles
+Fake soil probes that replay real weather history and sometimes lose the server's reply, so retries can be tested.
+
+Day 5, Video 5: HTTP
+Correct status codes, CORS for browsers, and ETags so clients can skip downloading data that hasn't changed.
+
+Day 6, Video 6: Routing
+The real API in FastAPI, with versioned routes and one consistent error format.
+
+Day 7, Video 7: Serialization
+Readings sent out as clean JSON, with units and UTC timestamps.
+
+Day 8, Video 8: Auth
+Passwords and login tokens for people, secret keys for probes, and roles per organization.
+
+Day 9, Video 9: Validation
+Incoming readings checked and cleaned before they're stored.
+
+Day 10, Video 10: Controllers, services, repositories
+The code split into layers, and safe retries: a batch sent twice is stored once.
+
+Day 11, Video 11: REST API design
+An endpoint that lists a device's readings page by page.
+
+Day 12, Video 12: Databases
+Postgres tables, migrations, and storing each batch exactly once even under concurrent retries.
+
+Day 13, Video 13: Caching
+A cache for each device's latest reading, so the dashboard doesn't hit the database every time.
+
+Day 14, Video 14: Task queues
+A job queue in Postgres, so alerts are created with the readings and delivered in the background.
+
+Day 15, Video 15: Full-text search
+Searching technicians' field notes by word, ranked by relevance.
+
+Day 16, Video 16: Error handling
+Retries, a circuit breaker and a fallback, so a failing weather API doesn't take Tessel down.
+
+Day 17, Video 17: Configuration
+Settings read from the environment, and a refusal to start if they're wrong.
+
+Day 18, Video 18: Observability
+Structured logs and latency metrics, so you can see what Tessel is doing.
+
+Day 19, Video 19: Graceful shutdown
+A worker that finishes its current job before stopping.
+
+Day 20, Video 20: Security
+Rate limits for misbehaving probes, security headers, and protection against password guessing.
+
+Day 21, Video 21.1: Scaling, part 1
+Estimating the load (about 83 uploads a second) and measuring latency properly.
+
+Day 22, Video 21.2: Scaling, part 2
+A load test that checks for duplicates, and readings split into monthly tables.
+
+Day 23, Video 22: Concurrency
+Many network calls at once without overloading the other side, and heavy work moved off the main thread.
+
+Day 24, Video 23: Object storage, part 1
+CSV exports saved in object storage and downloaded through short-lived links.
+
+Day 25, Video 24: Object storage, part 2
+Very large files uploaded in parts, and downloads that can resume.
+
+Day 26, Video 25: Real-time
+Alerts pushed live to the dashboard.
+
+Day 27, Video 26: Testing
+Tools that make tests short: a fake clock, data builders, and a ready-made app.
+
+Day 28, Video 27: Twelve-Factor App
+Admin commands and a real worker process, all configured the same way.
+
+Day 29, Video 28: OpenAPI
+A check that fails the build if an API change would break existing clients.
+
+Day 30, Video 29: Webhooks
+Alerts sent to other systems, signed so they can be trusted.
+
+Day 31, Video 30: DevOps
+Docker images, a local stack with every service, and CI that tests every change.
