@@ -85,7 +85,5 @@ def main(argv: list[str] | None = None) -> int:
     print(f"would run {args.handler} with {vars(args)}")
     return 0
 
-
-
 if __name__ == "__main__":
     sys.exit(main())
