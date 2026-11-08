@@ -28,3 +28,8 @@ def is_stuck(window: list[Hour], hours: int = 12, flat: float = 1e-4, min_rain_m
     thawed = all(h.temp_c > 0 for h in w)
 
     return flat_line and rained and thawed
+
+def is_spike(prev: Hour, cur: Hour, max_jump: float = 0.10, dry_mm: float = 0.1) -> bool:
+    return abs(cur.moisture - prev.moisture) > max_jump and cur.rain_mm < dry_mm
+    # asks 'did the moisture jump a lot' and 'was it dry (no rain)'
+
