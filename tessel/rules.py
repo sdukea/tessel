@@ -33,3 +33,11 @@ def is_spike(prev: Hour, cur: Hour, max_jump: float = 0.10, dry_mm: float = 0.1)
     return abs(cur.moisture - prev.moisture) > max_jump and cur.rain_mm < dry_mm
     # asks 'did the moisture jump a lot' and 'was it dry (no rain)'
 
+def is_silent(last_seen: datetime, now: datetime, interval: timedelta, missed: int = 3) -> bool:
+    return now - last_seen > missed * interval
+
+def evaluate(window: list[Hour], threshold: float) -> list[str]:
+    # runs every rule on the newest hour and returns the kind of alerts that fired
+    if not window:
+        return []
+    
